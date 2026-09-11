@@ -26,6 +26,9 @@ export default class ContactUsPage{
     }
 
     async ClickSubmitButton(){
+        // The confirm() is wired by an inline script at the end of <body>; clicking before the
+        // page finishes loading submits the form natively with no dialog.
+        await this.page.waitForLoadState('load');
         await this.ContactUsSubmitButton.click()
     }
 
