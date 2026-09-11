@@ -1,4 +1,5 @@
 import { expect, Page, Locator } from '@playwright/test';
+import User from '../Models/User';
 
 export type ProductDetails = {
   name: string;
@@ -26,15 +27,56 @@ export default class ProductPage{
     private get ProductPageHeading(): Locator { return this.page.getByRole('heading', {name:'All Products'})}
     private get ProductsList(): Locator { return this.page.locator('.features_items .product-image-wrapper')}
     private get ProductInfo(): Locator { return this.page.locator('.product-information'); }
-    private ViewProductButton(index:number): Locator { return this.page.locator('.product-image-wrapper').nth(index).getByRole('link', {name: 'View Product'})}
+    private ViewProductButton(product: string): Locator { return this.page.locator('.product-image-wrapper').filter({hasText:product}).getByRole('link', {name: 'View Product'})}
     private get SearchField(): Locator { return this.page.getByPlaceholder("Search Product")}
     private get SearchFieldButton(): Locator {return this.page.locator('#submit_search')}
     private get SearchedProductsHeading(): Locator { return this.page.getByRole('heading', {name: 'Searched Products'})}
     private get AllSearchedItems(): Locator { return this.page.locator('.productinfo')}
     private get ProductCard(): Locator {return this.page.locator('.product-image-wrapper')}
     private get ContinueShoppingButton(): Locator { return this.page.getByRole('button', {name: 'Continue Shopping'})}
+    private get BrandsList(): Locator { return this.page.locator('.brands_products')}
+    private SpecificBrand(brand: string): Locator { return this.BrandsList.locator('li').filter({hasText:brand})} 
+    private BrandHeader(brand: string): Locator { return this.page.getByText(`Brand - ${brand} Products`)}
+    private get WriteReviewText(): Locator { return this.page.locator('li').getByText('Write Your Review')}
+    private get NameReviewField(): Locator {return this.page.getByPlaceholder('Your Name')}
+    private get EmailReviewField(): Locator { return this.page.locator('#email')}
+    private get MessageReviewField(): Locator { return this.page.getByPlaceholder('Add Review Here!')}
+    private get SubmitReviewButton(): Locator { return this.page.locator('#button-review')}
+    private get ReviewSuccessMeassage(): Locator { return this.page.getByText('Thank you for your review.')}
+    private CategoryHeaderText(category: string, subcategory: string): Locator { return this.page.getByText(`${category} - ${subcategory} Products`)}
+    private CategoryList(category: string): Locator { return this.page.locator('#accordian .panel-title').filter({hasText: new RegExp(`\\b${category}\\b`)}).locator('.fa-plus')}
+    private SubCategory(category: string ,subcategroy: string): Locator { return this.page.locator(`#${category} .panel-body`).getByRole('link', {name: subcategroy})}
 
     // Methods
+    async ClickOnSubCategory(category: string, subcategory: string) { 
+    const link = this.SubCategory(category, subcategory)
+    await expect(link).toBeVisible()
+    await link.click()}
+    
+    async ClickOnCategory(category: string) { await this.CategoryList(category).click()}
+ 
+    async VerifyCategoryHeaderText(category: string, subcategory: string) { await expect(this.CategoryHeaderText(category, subcategory)).toBeVisible()}
+    async VerifyReviewSuccessMessage() { await expect(this.ReviewSuccessMeassage).toBeVisible()}
+    async SubmitReview() { await this.SubmitReviewButton.click()}
+
+    async FillReview(user:User){
+        await this.NameReviewField.fill(user.getFirstName())
+        await this.EmailReviewField.fill(user.getEmail())
+        await this.MessageReviewField.fill(user.getMessage())
+    }
+
+    async VerifyReviewVisible(){ await expect(this.WriteReviewText).toBeVisible()}
+
+    async VerifyListingHeading(brand: string) { 
+        const headertext = this.BrandHeader(brand);
+        await expect(headertext).toBeVisible()
+        console.log(headertext)
+    }   
+
+    async AccessASpecificBrand(brand:string) { await this.SpecificBrand(brand).click()}
+
+    async VerifyBrandSidebarVisible() {await expect(this.BrandsList).toBeVisible()}
+
     async ClickContinueButton(){ await this.ContinueShoppingButton.click()}
 
     async AddProductsToCart(product:string) { 
@@ -72,8 +114,8 @@ export default class ProductPage{
 
     async VerifyProductDetailPageVisibility(productId: number){ await expect(this.page).toHaveURL(`https://www.automationexercise.com/product_details/${productId}`)}
 
-    async ClickOnViewProductButton(index: number){
-        await this.ViewProductButton(index).click()
+    async ClickOnViewProductButton(product: string){
+        await this.ViewProductButton(product).click()
     }
 
     async VerifyProductListVisibility(){

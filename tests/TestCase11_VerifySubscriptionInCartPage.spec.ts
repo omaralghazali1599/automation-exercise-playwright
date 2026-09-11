@@ -15,11 +15,11 @@ test('Verify Subscription in Cart Page', async ({ page }) => {
     // Click 'Cart' button
     await basepage.goToCart();
     // Verify text 'SUBSCRIPTION'
-    await cartpage.verifySubscriptionText();
+    await cartpage.VerifySubscriptionText();
     // Enter email address in input and click arrow button
-    await cartpage.enterEmail(user);
+    await cartpage.EnterEmail(user);
     // Click arrow button
-    await cartpage.clickSubmit();
+    await cartpage.ClickSubmit();
     // Verify success message 'You have been successfully subscribed!' is visible
-    await cartpage.verifySuccessMessage();
+    await cartpage.VerifySuccessMessage();
 });

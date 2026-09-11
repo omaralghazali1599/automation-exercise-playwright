@@ -17,7 +17,7 @@ test('Verify All Products and product detail page', async ({ page }) => {
   // The products list is visible
   await productpage.VerifyProductListVisibility();
   // Click on 'View Product' of first product
-  await productpage.ClickOnViewProductButton(0);
+  await productpage.ClickOnViewProductButton('Blue Top');
   // User is landed to product detail page
   await productpage.VerifyProductDetailPageVisibility(1); 
   // Verify that detail detail is visible: product name, category, price, availability, condition, brand

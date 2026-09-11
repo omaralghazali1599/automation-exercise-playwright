@@ -1,5 +1,12 @@
 import { faker } from "@faker-js/faker";
 
+export type PaymentInfo = {
+    nameOnCard: string;
+    cardNumber: string;
+    cvc: string;
+    expirationMonth: string;
+    expirationYear: string;
+}
 
 export type AddressInfo = {
     firstName: string;
@@ -16,7 +23,8 @@ export type AddressInfo = {
 
 
 export default class User{
-    private address: AddressInfo;
+    private payment:PaymentInfo; 
+    private address:AddressInfo;
     private email:string;
     private password:string;
     private firstname:string;
@@ -31,14 +39,27 @@ export default class User{
         this.subject = Subject ?? "";
         this.message = Message ?? "";
         this.address = User.randomAddress(this.firstname);
+        this.payment = User.cardInfo(this.firstname)
     }
 
+    getCardInfo() { return this.payment}
     getAddress() { return this.address; }
     getEmail(){ return this.email }
     getPassword(){ return this.password}
     getFirstName(){ return this.firstname}
     getSubject(){ return this.subject}
     getMessage(){ return this.message}
+
+    static cardInfo(nameOnCard:string): PaymentInfo {
+        const expiryDate = faker.date.future({ years: 5 });
+        return{
+            nameOnCard,
+            cardNumber: faker.finance.accountNumber(14),
+            cvc: faker.finance.creditCardCVV(),
+            expirationMonth: String(expiryDate.getMonth()).padStart(2,'0'),
+            expirationYear: String(expiryDate.getFullYear())
+        };
+    }
 
     static randomAddress(firstName: string ): AddressInfo {
     return {
