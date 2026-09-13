@@ -43,12 +43,33 @@ export default class User{
     }
 
     getCardInfo() { return this.payment}
-    getAddress() { return this.address; }
-    getEmail(){ return this.email }
+    getAddress() { return this.address;}
+    getEmail(){ return this.email}
     getPassword(){ return this.password}
     getFirstName(){ return this.firstname}
     getSubject(){ return this.subject}
     getMessage(){ return this.message}
+    getCreateAccountForm() {
+        return {
+            name: this.firstname,
+            email: this.email,
+            password: this.password,
+            title: 'Mr',
+            birth_date: '01',
+            birth_month: '05',
+            birth_year: '1999',
+            firstname: this.address.firstName,
+            lastname: this.address.lastName,
+            company: this.address.company,
+            address1: this.address.address1,
+            address2: this.address.address2,
+            country: this.address.country,
+            zipcode: this.address.zipcode,
+            state: this.address.state,
+            city: this.address.city,
+            mobile_number: this.address.mobile
+        };
+    }
 
     static cardInfo(nameOnCard:string): PaymentInfo {
         const expiryDate = faker.date.future({ years: 5 });
@@ -74,7 +95,7 @@ export default class User{
       zipcode: faker.location.zipCode(),
       mobile: faker.phone.number(),
     };
-  }
+    }
 
     static random() {
         return new User(faker.internet.email(), faker.internet.password(), faker.person.firstName(), faker.lorem.words(), faker.lorem.text());
