@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { MessageResponse } from '../../Models/APITypes';
+import SearchProduct from '../../APIs/SearchProduct';
 
 
 test('API 6: POST To Search Product without search_product parameter',async ({ request }) =>  {
-    const response = await request.post('api/searchProduct');
+    const postsearch = new SearchProduct(request)
+    const response = await postsearch.postSearchProductWithoutParameter();
     
     expect(response.status()).toBe(200);
 

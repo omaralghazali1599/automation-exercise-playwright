@@ -43,7 +43,7 @@ export default class LoginPage {
     await this.SignupEmailField.fill(user.getEmail());
     await this.SignupNameField.fill(user.getFirstName());
     await this.SignupButton.click();
-    console.log(user.getEmail(),user.getFirstName())
+    // console.log(user.getEmail(),user.getFirstName())
   }
 
   async ProvideIncorrectLoginCredentials(user: User) {

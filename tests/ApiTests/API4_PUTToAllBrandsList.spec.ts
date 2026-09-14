@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { MessageResponse } from '../../Models/APITypes';
+import BrandList from '../../APIs/BrandList';
 
 test('API 4: PUT To All Brands List', async ({ request }) => {
-const response = await request.put('/api/brandsList');
+const brandList = new BrandList(request);
+const response = await brandList.putBrandList();
 
 // HTTP status
 expect(response.status()).toBe(200);

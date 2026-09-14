@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
-import CartPage from '../pages/CartPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
 
-test('Add Products in Cart', async ({ page }) => {
+test('Test Case 12: Add Products in Cart', async ({ page }) => {
   const basepage = new BasePage(page)
   const homepage = new HomePage(page)
   const productpage = new ProductPage(page)

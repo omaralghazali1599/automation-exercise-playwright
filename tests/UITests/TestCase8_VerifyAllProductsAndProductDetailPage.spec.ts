@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
 
-test('Verify All Products and product detail page', async ({ page }) => {
+test('Test Case 8: Verify All Products and Product Detail Page', async ({ page }) => {
   const basepage = new BasePage(page)
   const homepage = new HomePage(page)
   const productpage = new ProductPage(page)

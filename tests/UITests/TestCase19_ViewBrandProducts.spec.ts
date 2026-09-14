@@ -1,11 +1,11 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
 
 // NOTE: official title says "View & Cart Brand Products" but the official steps never add anything
 // to a cart — implementing the steps as written below, not the title.
-test('View Brand Products', async ({ page }) => {
+test('Test Case 19: View Brand Products', async ({ page }) => {
   const brand1 = 'Kookie Kids'
   const brand2 = 'Polo'
 

@@ -29,7 +29,7 @@ export default class PaymentPage{
         const downloadPromise = this.page.waitForEvent('download');
         await this.DownloadInvoiceButton.click();
         const download = await downloadPromise;
-        console.log(download.suggestedFilename())
+        // console.log(download.suggestedFilename())
 
         expect(download.suggestedFilename()).toBe('invoice.txt');
 

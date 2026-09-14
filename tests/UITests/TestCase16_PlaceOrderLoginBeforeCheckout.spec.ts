@@ -1,14 +1,14 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
-import CartPage from '../pages/CartPage';
-import SignUpLoginPage from '../pages/SignUpLoginPage';
-import CheckoutPage from '../pages/CheckOutPage';
-import PaymentPage from '../pages/PaymentPage';
+import User from '../../Models/User';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
+import SignUpLoginPage from '../../pages/SignUpLoginPage';
+import CheckoutPage from '../../pages/CheckOutPage';
+import PaymentPage from '../../pages/PaymentPage';
 
-test('Place Order: Login before Checkout', async ({ page }) => {
+test('Test Case 16: Place Order: Login before Checkout', async ({ page }) => {
   const user = User.notRandom();
   const product = 'Blue Top';
   const basepage = new BasePage(page);

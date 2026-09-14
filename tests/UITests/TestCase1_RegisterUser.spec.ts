@@ -1,11 +1,11 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import SignUpLoginPage from '../pages/SignUpLoginPage';
-import User from '../Models/User';
-import SignUpPage from '../pages/SignUpPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import SignUpLoginPage from '../../pages/SignUpLoginPage';
+import User from '../../Models/User';
+import SignUpPage from '../../pages/SignUpPage';
 
-test('Register User', async ({ page }) => {
+test('Test Case 1: Register User', async ({ page }) => {
   const user = User.random();
   const basepage = new BasePage(page)
   const homepage = new HomePage(page)

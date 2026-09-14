@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import HomePage from '../pages/HomePage';
-import SignUp_LoginPage from '../pages/SignUpLoginPage';
-import BasePage from '../pages/BasePage';
+import User from '../../Models/User';
+import HomePage from '../../pages/HomePage';
+import SignUp_LoginPage from '../../pages/SignUpLoginPage';
+import BasePage from '../../pages/BasePage';
 
-test('Register User with Existing Email', async ({ page }) => {
+test('Test Case 5: Register User with Existing Email', async ({ page }) => {
   const basepage = new BasePage(page);
   const user = User.notRandom();
   const loginPage = new SignUp_LoginPage(page);

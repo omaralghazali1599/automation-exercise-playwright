@@ -70,7 +70,7 @@ export default class ProductPage{
     async VerifyListingHeading(brand: string) { 
         const headertext = this.BrandHeader(brand);
         await expect(headertext).toBeVisible()
-        console.log(headertext)
+        // console.log(headertext)
     }   
 
     async AccessASpecificBrand(brand:string) { await this.SpecificBrand(brand).click()}
@@ -92,7 +92,7 @@ export default class ProductPage{
         const matching = this.AllSearchedItems.filter({hasText: new RegExp(term, 'i')})
         await expect(this.AllSearchedItems).not.toHaveCount(0);
         await expect(matching).toHaveCount(totalcount)
-        console.log(totalcount)
+        // console.log(totalcount)
         
     }
 
@@ -121,7 +121,7 @@ export default class ProductPage{
     async VerifyProductListVisibility(){
         await expect(this.ProductsList.first()).toBeVisible();
         expect(await this.ProductsList.count()).toBeGreaterThan(0)
-        console.log(await this.ProductsList.count())
+        // console.log(await this.ProductsList.count())
     }
 
     async VerifyProductPageVisibilty(){

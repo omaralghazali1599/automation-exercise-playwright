@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
 
-test('View Category Products', async ({ page }) => {
+test('Test Case 18: View Category Products', async ({ page }) => {
     let Category = 'Women';    let Category2 = 'Men';
     let SubCategory = 'Dress'; let SubCategory2 = 'Tshirts';
     const basepage = new BasePage(page);

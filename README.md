@@ -15,12 +15,15 @@ Covers all 26 UI test cases and all 14 API endpoints from the site's published p
 
 ```
 pages/            Page Object classes — one class per site page/section, exposing locators and user-facing actions
+APIs/             API client classes — one class per endpoint group, wrapping Playwright's request fixture
 Models/           Data models (User, AddressInfo, PaymentInfo) and API response types (APITypes.ts)
-tests/            UI spec files, one per test case
+tests/UITests/    UI spec files, one per test case
 tests/ApiTests/   API spec files, one per endpoint
 ```
 
 Each page object encapsulates its own locators as private getters and exposes intention-revealing methods (e.g. `FillAddressInfo`, `VerifyAccountCreatedText`) so test specs read as a sequence of user actions and assertions rather than raw selectors.
+
+The `APIs/` classes play the same role for the API suite: a spec builds its data, calls one method (`postCreateUser`, `deleteUser`, `getUserDetailsByEmail`), and asserts on the response, so no spec issues a raw `request.get`/`post` of its own. Methods are named `<httpVerb><Action>` in camelCase.
 
 `baseURL` is set in `playwright.config.ts`, so every spec uses relative paths (`/api/productsList`) rather than repeating the host.
 
@@ -100,10 +103,16 @@ Run only the API tests (a few seconds, no browser needed):
 npx playwright test tests/ApiTests/
 ```
 
+Run only the UI tests (browser-driven, much slower):
+
+```bash
+npx playwright test tests/UITests/
+```
+
 Run a single spec:
 
 ```bash
-npx playwright test tests/TestCase1_RegisterUser.spec.ts
+npx playwright test tests/UITests/TestCase1_RegisterUser.spec.ts
 ```
 
 View the HTML report after a run:

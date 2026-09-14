@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
+import User from '../../Models/User';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
 
-test('Add review on product', async ({ page }) => {
+test('Test Case 21: Add Review on Product', async ({ page }) => {
   const user = User.random();
   const basepage = new BasePage(page);
   const homepage = new HomePage(page);

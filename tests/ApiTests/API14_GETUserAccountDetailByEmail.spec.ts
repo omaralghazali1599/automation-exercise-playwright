@@ -1,15 +1,16 @@
-import { test, expect, request } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import User from '../../Models/User';
 import { MessageResponse, UserDetailResponse } from '../../Models/APITypes';
+import UserDetail from '../../APIs/UserDetail';
+import CreateAccount from '../../APIs/CreateAccount';
 
 test('API 14: GET user account detail by email', async ({ request }) => {
     const user = User.random();
     const address = user.getAddress();
-
+    const createaccount = new CreateAccount(request);
+    
     // Register the account this test will read back, so it owns its own data
-    const createResponse = await request.post('/api/createAccount', {
-        form: user.getCreateAccountForm()
-    })
+    const createResponse = await createaccount.postCreateUser(user)
 
     expect(createResponse.status()).toBe(200);
 
@@ -20,9 +21,8 @@ test('API 14: GET user account detail by email', async ({ request }) => {
     expect(createBody.message).toBe('User created!')
 
     // Reuse the same email to look the account up
-    const response = await request.get('/api/getUserDetailByEmail', {
-        params: { email: user.getEmail() }
-    })
+    const getuserdetail = new UserDetail(request)
+    const response = await getuserdetail.getUserDetailsByEmail(user.getEmail())
 
     expect(response.status()).toBe(200);
 

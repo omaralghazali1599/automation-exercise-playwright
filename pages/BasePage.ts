@@ -48,7 +48,7 @@ export default class BasePage{
     async VerifyLoggedInAs(user: User) {
         const loggedinastext = this.LoggedInAs(user.getFirstName());
         await expect(loggedinastext).toBeVisible();
-        console.log(await loggedinastext.textContent())
+        // console.log(await loggedinastext.textContent())
     }
 
     async goToHome()      { await this.NavLink('Home').click(); }

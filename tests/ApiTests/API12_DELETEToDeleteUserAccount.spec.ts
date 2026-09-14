@@ -1,14 +1,14 @@
-import { test, expect, request } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import User from '../../Models/User';
 import { MessageResponse } from '../../Models/APITypes';
+import CreateAccount from '../../APIs/CreateAccount';
+import DeleteAccount from '../../APIs/DeleteAccount';
+import UserDetail from '../../APIs/UserDetail';
 
 test('API 12: DELETE To Delete User Account', async ({ request }) => {
-    const user = User.random();
-
-    // Register the account this test will delete, so it owns its own data
-    const createResponse = await request.post('/api/createAccount', {   
-        form: user.getCreateAccountForm()
-    })
+    const user = User.random()
+    const createaccount = new CreateAccount(request);
+    const createResponse = await createaccount.postCreateUser(user)
 
     expect(createResponse.status()).toBe(200);
 
@@ -19,16 +19,12 @@ test('API 12: DELETE To Delete User Account', async ({ request }) => {
     expect(createBody.message).toBe('User created!')
 
     // Reuse the same credentials to delete it
-    const response = await request.delete('/api/deleteAccount', {
-        form: {
-            email: user.getEmail(),
-            password: user.getPassword()
-        }
-    })
+    const deleteaccount = new DeleteAccount(request)
+    const deleteResponse = await deleteaccount.deleteUser(user)
 
-    expect(response.status()).toBe(200);
+    expect(deleteResponse.status()).toBe(200);
 
-    const body: MessageResponse = await response.json()
+    const body: MessageResponse = await deleteResponse.json()
     // console.log(JSON.stringify(body))
 
     expect(body).toHaveProperty('responseCode');
@@ -38,13 +34,12 @@ test('API 12: DELETE To Delete User Account', async ({ request }) => {
     expect(body.message).toBe('Account deleted!')
 
     // The account is really gone: looking it up by the same email no longer finds it
-    const getResponse = await request.get('/api/getUserDetailByEmail', {
-        params: { email: user.getEmail() }
-    })
+    const getdeletedaccount = new UserDetail(request)
+    const detailsResponse = await getdeletedaccount.getUserDetailsByEmail(user.getEmail())
 
-    expect(getResponse.status()).toBe(200);
+    expect(detailsResponse.status()).toBe(200);
 
-    const getBody: MessageResponse = await getResponse.json()
+    const getBody: MessageResponse = await detailsResponse.json()
     // console.log(JSON.stringify(getBody))
 
     expect(getBody).toHaveProperty('responseCode');

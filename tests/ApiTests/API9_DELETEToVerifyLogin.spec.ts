@@ -1,12 +1,14 @@
-import { test, expect, request } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { MessageResponse } from '../../Models/APITypes'
+import VerifyLogin from '../../APIs/VerifyLogin'
 
 test('API 9: DELETE To Verify Login', async ({ request }) => {
-    const reponse = await request.delete('/api/verifyLogin')
+    const verifylogin = new VerifyLogin(request)
+    const response = await verifylogin.deleteVerifyLogin();
 
-    expect(reponse.status()).toBe(200)
+    expect(response.status()).toBe(200)
 
-    const body: MessageResponse = await reponse.json()
+    const body: MessageResponse = await response.json()
     // console.log(JSON.stringify(body))
 
     expect(body).toHaveProperty('responseCode');

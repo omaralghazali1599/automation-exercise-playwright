@@ -1,11 +1,11 @@
-import { test, expect} from '@playwright/test'
-import User from "../../Models/User";
+import { test, expect } from '@playwright/test'
 import { MessageResponse } from '../../Models/APITypes';
+import VerifyLogin from '../../APIs/VerifyLogin';
 
 
 test('API 8: POST To Verify Login without email parameter', async ({ request }) => {
-    const user = User.notRandom()
-    const response = await request.post('/api/verifyLogin', {form: { password: user.getPassword()}})
+    const verifylogin = new VerifyLogin(request)
+    const response = await verifylogin.postLoginWithoutEmailParam()
 
     expect(response.status()).toBe(200);
 

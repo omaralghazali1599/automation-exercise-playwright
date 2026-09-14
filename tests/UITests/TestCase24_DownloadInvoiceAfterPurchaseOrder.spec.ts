@@ -1,15 +1,15 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
-import CartPage from '../pages/CartPage';
-import SignUpLoginPage from '../pages/SignUpLoginPage';
-import SignUpPage from '../pages/SignUpPage';
-import CheckoutPage from '../pages/CheckOutPage'; 
-import PaymentPage from '../pages/PaymentPage';
+import User from '../../Models/User';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
+import SignUpLoginPage from '../../pages/SignUpLoginPage';
+import SignUpPage from '../../pages/SignUpPage';
+import CheckoutPage from '../../pages/CheckOutPage';
+import PaymentPage from '../../pages/PaymentPage';
 
-test('Place Order: Register while Checkout', async ({ page }) => {
+test('Test Case 24: Download Invoice after Purchase Order', async ({ page }) => {
   const user = User.random();
   const product = 'Blue Top';
   const basepage = new BasePage(page);
@@ -20,6 +20,7 @@ test('Place Order: Register while Checkout', async ({ page }) => {
   const signuppage = new SignUpPage(page);
   const checkoutpage = new CheckoutPage(page);
   const paymentpage = new PaymentPage(page)
+
   await basepage.goto();
   // Verify that home page is visible successfully
   await homepage.VerifyHomePageVisible();
@@ -28,13 +29,13 @@ test('Place Order: Register while Checkout', async ({ page }) => {
   await productpage.VerifyProductPageVisibilty();
   await productpage.AddProductsToCart(product);
   // Click 'Cart' button
-  await productpage.ClickViewCart()
+  await productpage.ClickViewCart();
   // Verify that cart page is displayed
   await cartpage.VerifyProductsInCart(product);
   // Click Proceed To Checkout
-  await cartpage.ClickProceedToCheckout(); // TODO: needs CartPage.ClickProceedToCheckout — not yet implemented (button class '.check_out' on cart page)
+  await cartpage.ClickProceedToCheckout();
   // Click 'Register / Login' button
-  await cartpage.ClickRegisterLoginInCheckoutModal(); // TODO: needs CartPage checkout-modal support ('#checkoutModal', link text 'Register / Login') — not yet implemented
+  await cartpage.ClickRegisterLoginInCheckoutModal();
   // Fill all details in Signup and create account
   await basepage.goToLogin();
   await signuploginpage.VerifySignUpText();
@@ -55,16 +56,20 @@ test('Place Order: Register while Checkout', async ({ page }) => {
   // Click 'Proceed To Checkout' button
   await cartpage.ClickProceedToCheckout();
   // Verify Address Details and Review Your Order
-  await checkoutpage.VerifyBillingAddressMatches(user)
   await checkoutpage.VerifyDeliveryAddressMatches(user)
+  await checkoutpage.VerifyBillingAddressMatches(user)
   // Enter description in comment text area and click 'Place Order'
   await checkoutpage.EnterCommentAndPlaceOrder('Please deliver in the morning.');
   // Enter payment details: Name on Card, Card Number, CVC, Expiration date
   await paymentpage.FillPaymentInfo(user.getCardInfo())
   // Click 'Pay and Confirm Order' button
-  await paymentpage.ClickPayAndConfirm()
+  await paymentpage.ClickPayAndConfirm();
   // Verify success message 'Your order has been placed successfully!'
-  await paymentpage.VerifyConfirmationMessage()
+  await paymentpage.VerifyConfirmationMessage();
+  // Click 'Download Invoice' button and verify invoice is downloaded successfully
+  await paymentpage.DownloadInvoiceAndVerify(user);
+  // Click 'Continue' button
+  await paymentpage.ClickContinueButton();
   // Click 'Delete Account' button
   await basepage.goToDeleteAcc();
   // Verify 'ACCOUNT DELETED!' and click 'Continue' button

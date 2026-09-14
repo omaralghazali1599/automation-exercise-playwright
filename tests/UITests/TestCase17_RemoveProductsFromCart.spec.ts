@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
-import CartPage from '../pages/CartPage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
 
-test('Remove Products From Cart', async ({ page }) => {
+test('Test Case 17: Remove Products From Cart', async ({ page }) => {
   const product = 'Blue Top';
   const basepage = new BasePage(page);
   const homepage = new HomePage(page);

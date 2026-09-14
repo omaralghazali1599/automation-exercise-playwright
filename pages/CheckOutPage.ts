@@ -29,8 +29,8 @@ export default class CheckOutPage{
         await expect(block).toContainText(address.zipcode);
         await expect(block).toContainText(address.country);
         await expect(block).toContainText(address.mobile);
-        console.log(block)
-        console.log(address)
+        // console.log(block)
+        // console.log(address)
 
     }
 

@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { MessageResponse } from '../../Models/APITypes';
+import ProductList from '../../APIs/ProductList';
 
 test('API 2: POST To All Products List', async ({ request }) => {
-  const response = await request.post('/api/productsList');
+  const productlist = new ProductList(request);
+  const response = await productlist.postProducts();
 
   // HTTP status
   expect(response.status()).toBe(200);
@@ -10,7 +12,6 @@ test('API 2: POST To All Products List', async ({ request }) => {
   const body: MessageResponse = await response.json();
   // console.log(JSON.stringify(body));
 
-  
   expect(body).toHaveProperty('responseCode');
   expect(body).toHaveProperty('message')
   

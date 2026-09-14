@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
 
-test("Verify Scroll Up without 'Arrow' button and Scroll Down functionality", async ({ page }) => {
+test("Test Case 25: Verify Scroll Up using 'Arrow' Button and Scroll Down Functionality", async ({ page }) => {
   const basepage = new BasePage(page);
   const homepage = new HomePage(page);
 
@@ -13,8 +13,8 @@ test("Verify Scroll Up without 'Arrow' button and Scroll Down functionality", as
   await homepage.ScrollToFooter();
   // Verify 'SUBSCRIPTION' is visible
   await homepage.VerifySubscribtionText();
-  // Scroll up page to top
-  await homepage.ScrollToTop();
+  // Click on arrow at bottom right side to move upward
+  await homepage.ClickScrollUpArrow();
   // Verify that page is scrolled up and 'Full-Fledged practice website for Automation Engineers' text is visible on screen
-  await homepage.VerifyHeroTextVisible(); 
+  await homepage.VerifyHeroTextVisible();
 });

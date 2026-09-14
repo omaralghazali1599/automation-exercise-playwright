@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { ProductsResponse } from '../../Models/APITypes';
+import SearchProduct from '../../APIs/SearchProduct';
 
 test('API 5: POST To Search Product', async ({ request }) => {
-const searchProduct = 'top';
 
-const response = await request.post('/api/searchProduct', {form: { search_product: searchProduct }});
+const searchProduct = 'top';
+const postsearch = new SearchProduct(request)
+const response = await postsearch.postSearchProduct(searchProduct);
 
 // HTTP status
 expect(response.status()).toBe(200);

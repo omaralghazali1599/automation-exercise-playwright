@@ -1,8 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { BrandsResponse } from '../../Models/APITypes';
+import BrandList from '../../APIs/BrandList';
 
 test('API 3: Get All Brands List', async ({ request }) => {
-const response = await request.get('/api/brandsList');
+const brandlist = new BrandList(request)
+const response = await brandlist.getBrandList()
 
 // HTTP status
 expect(response.status()).toBe(200);

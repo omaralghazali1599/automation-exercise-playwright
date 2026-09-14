@@ -1,12 +1,12 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import ProductPage from '../pages/ProductsPage';
-import CartPage from '../pages/CartPage';
-import SignUpLoginPage from '../pages/SignUpLoginPage';
+import User from '../../Models/User';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
+import SignUpLoginPage from '../../pages/SignUpLoginPage';
 
-test('Search Products and Verify Cart After Login', async ({ page }) => {
+test('Test Case 20: Search Products and Verify Cart After Login', async ({ page }) => {
   const user = User.notRandom();
   const product1 = 'Sleeveless Dress';
   const product2 = 'Stylish Dress';

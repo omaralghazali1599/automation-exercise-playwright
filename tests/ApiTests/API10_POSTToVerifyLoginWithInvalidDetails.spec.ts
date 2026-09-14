@@ -1,16 +1,11 @@
 import { test, expect } from '@playwright/test'
-import User from '../../Models/User';
 import { MessageResponse } from '../../Models/APITypes';
+import VerifyLogin from '../../APIs/VerifyLogin';
 
 test('API 10: POST To Verify Login with invalid details', async ({ request }) => {
-    const user = User.random();
-    const response = await request.post('api/verifyLogin', {
-        form: {
-            email: user.getEmail(),
-            password: user.getPassword()
-        }
-    })
-
+    const verifylogin = new VerifyLogin(request)
+    const response = await verifylogin.postLoginWithInvalidCred();
+    
     expect(response.status()).toBe(200);
 
     const body: MessageResponse = await response.json();

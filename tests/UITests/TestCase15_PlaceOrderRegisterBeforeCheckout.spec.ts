@@ -1,14 +1,15 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import BasePage from '../pages/BasePage';
-import HomePage from '../pages/HomePage';
-import CartPage from '../pages/CartPage';
-import SignUpLoginPage from '../pages/SignUpLoginPage';
-import SignUpPage from '../pages/SignUpPage';
-import ProductPage from '../pages/ProductsPage';
-import CheckoutPage from '../pages/CheckOutPage'; // not yet implemented
+import User from '../../Models/User';
+import BasePage from '../../pages/BasePage';
+import HomePage from '../../pages/HomePage';
+import ProductPage from '../../pages/ProductsPage';
+import CartPage from '../../pages/CartPage';
+import SignUpLoginPage from '../../pages/SignUpLoginPage';
+import SignUpPage from '../../pages/SignUpPage';
+import CheckoutPage from '../../pages/CheckOutPage';
+import PaymentPage from '../../pages/PaymentPage';
 
-test('Verify address details in checkout page', async ({ page }) => {
+test('Test Case 15: Place Order: Register before Checkout', async ({ page }) => {
   const user = User.random();
   const product = 'Blue Top';
   const basepage = new BasePage(page);
@@ -17,8 +18,8 @@ test('Verify address details in checkout page', async ({ page }) => {
   const cartpage = new CartPage(page);
   const signuploginpage = new SignUpLoginPage(page);
   const signuppage = new SignUpPage(page);
-  const checkoutpage = new CheckoutPage(page)
-
+  const checkoutpage = new CheckoutPage(page);
+  const paymentpage = new PaymentPage(page)
   await basepage.goto();
   // Verify that home page is visible successfully
   await homepage.VerifyHomePageVisible();
@@ -47,11 +48,18 @@ test('Verify address details in checkout page', async ({ page }) => {
   // Verify that cart page is displayed
   await cartpage.VerifyProductsInCart(product);
   // Click Proceed To Checkout
-  await cartpage.ClickProceedToCheckout(); 
-  // Verify that the delivery address is same address filled at the time registration of account
-  await checkoutpage.VerifyDeliveryAddressMatches(user); 
-  // Verify that the billing address is same address filled at the time registration of account
-   await checkoutpage.VerifyBillingAddressMatches(user); 
+  await cartpage.ClickProceedToCheckout(); // TODO: needs CartPage.ClickProceedToCheckout — not yet implemented. Already logged in, so this should navigate straight to /checkout with no modal.
+  // Verify Address Details and Review Your Order
+  await checkoutpage.VerifyBillingAddressMatches(user)
+  await checkoutpage.VerifyDeliveryAddressMatches(user)
+  // Enter description in comment text area and click 'Place Order'
+  await checkoutpage.EnterCommentAndPlaceOrder('Please deliver in the morning.');
+  // Enter payment details: Name on Card, Card Number, CVC, Expiration date
+  await paymentpage.FillPaymentInfo(user.getCardInfo())
+  // Click 'Pay and Confirm Order' button
+  await paymentpage.ClickPayAndConfirm()
+  // Verify success message 'Your order has been placed successfully!'
+  await paymentpage.VerifyConfirmationMessage()
   // Click 'Delete Account' button
   await basepage.goToDeleteAcc();
   // Verify 'ACCOUNT DELETED!' and click 'Continue' button

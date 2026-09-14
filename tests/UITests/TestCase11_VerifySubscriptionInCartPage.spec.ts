@@ -1,10 +1,10 @@
 import { test } from '@playwright/test';
-import User from '../Models/User';
-import HomePage from '../pages/HomePage';
-import CartPage from '../pages/CartPage';
-import BasePage from '../pages/BasePage';
+import User from '../../Models/User';
+import HomePage from '../../pages/HomePage';
+import CartPage from '../../pages/CartPage';
+import BasePage from '../../pages/BasePage';
 
-test('Verify Subscription in Cart Page', async ({ page }) => {
+test('Test Case 11: Verify Subscription in Cart Page', async ({ page }) => {
     const basepage = new BasePage(page);
     const user = User.random();
     const homepage = new HomePage(page)

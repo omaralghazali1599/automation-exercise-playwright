@@ -1,9 +1,9 @@
 import { test } from '@playwright/test';
-import BasePage from '../pages/BasePage';
-import User from '../Models/User';
-import HomePage from '../pages/HomePage';
+import BasePage from '../../pages/BasePage';
+import User from '../../Models/User';
+import HomePage from '../../pages/HomePage';
 
-test(' Verify Subscription in Home Page', async ({ page }) => {
+test('Test Case 10: Verify Subscription in Home Page', async ({ page }) => {
   const basepage = new BasePage(page)
   const user = User.random()
   const homepage = new HomePage(page)
